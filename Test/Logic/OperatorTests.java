@@ -1,5 +1,6 @@
 package Logic;
 
+import Logic.Operators.*;
 import org.junit.jupiter.api.Test;
 
 public class OperatorTests {

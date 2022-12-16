@@ -1,4 +1,4 @@
-package Logic;
+package Logic.Operators;
 
 public class Addition implements Operator {
     @Override

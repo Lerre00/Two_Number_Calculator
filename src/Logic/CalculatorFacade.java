@@ -1,5 +1,7 @@
 package Logic;
 
+import Logic.Operators.*;
+
 public class CalculatorFacade {
     private Operator addition;
     private Operator subtraction;
