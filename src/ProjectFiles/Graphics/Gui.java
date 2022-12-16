@@ -8,7 +8,6 @@ public class Gui extends JFrame {
     private JPanel basePanel = new JPanel();
     private JPanel northPanel = new JPanel();
     private JPanel southPanel = new JPanel();
-    private JTextField resultWindow = new JTextField(35);
     private JButton button0 = new JButton("0");
     private JButton button1 = new JButton("1");
     private JButton button2 = new JButton("2");
@@ -31,6 +30,7 @@ public class Gui extends JFrame {
     private JButton negativeNumberButton = new JButton("(-)");
     private JButton swapColorButton = new JButton("☻");
     private JButton equalsButton = new JButton("=");
+    private JTextField resultWindow = new JTextField(35);
 
     public Gui(){
         basePanel.setLayout(new BorderLayout());
