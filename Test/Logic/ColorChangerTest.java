@@ -1,5 +1,6 @@
 package Logic;
 
+import ProjectFiles.Logic.ColorChanger;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;

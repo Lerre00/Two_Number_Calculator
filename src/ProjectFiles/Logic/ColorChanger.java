@@ -1,4 +1,4 @@
-package Logic;
+package ProjectFiles.Logic;
 
 import java.awt.*;
 import java.util.Arrays;

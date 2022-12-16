@@ -1,6 +1,7 @@
-package Logic;
+package ProjectFiles.Logic;
 
 import Logic.Operators.*;
+import ProjectFiles.Logic.Operators.*;
 
 public class CalculatorFacade {
     private Operator addition;

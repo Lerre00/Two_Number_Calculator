@@ -1,6 +1,4 @@
-package Logic.Operators;
-
-import Logic.Operators.Operator;
+package ProjectFiles.Logic.Operators;
 
 public class Root implements Operator {
     @Override
