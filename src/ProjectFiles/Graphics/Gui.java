@@ -1,9 +1,17 @@
 package ProjectFiles.Graphics;
 
+import ProjectFiles.Logic.CalculatorFacade;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class Gui extends JFrame {
+public class Gui extends JFrame implements ActionListener {
+
+    CalculatorFacade calculatorFacade;
 
     private JPanel basePanel = new JPanel();
     private JPanel northPanel = new JPanel();
@@ -31,8 +39,17 @@ public class Gui extends JFrame {
     private JButton swapColorButton = new JButton("☻");
     private JButton equalsButton = new JButton("=");
     private JTextField resultWindow = new JTextField(35);
+    ArrayList<JButton> buttonArray = new ArrayList<>(Arrays.asList(button0, button1, button2, button3, button4, button5, button6, button7, button8, button9,
+            commaButton, additionButton, subtractionButton, multiplicationButton, divisionButton, exponentButton, squareRootButton, clearButton, backspaceButton,
+            negativeNumberButton, swapColorButton, equalsButton));
 
     public Gui(){
+
+        for(JButton button: buttonArray){
+            button.addActionListener(this);
+        }
+
+        calculatorFacade = new CalculatorFacade();
         basePanel.setLayout(new BorderLayout());
         add(basePanel);
         basePanel.add(northPanel, BorderLayout.NORTH);
@@ -72,5 +89,12 @@ public class Gui extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource().equals(button0)){
+            resultWindow.setText(button0.getText());
+        }
     }
 }
