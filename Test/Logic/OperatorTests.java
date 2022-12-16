@@ -18,7 +18,6 @@ public class OperatorTests {
 
         assert(testAddition.calculate(d1,d2)==10);
         assert(testExponent.calculate(d1,d2)!=20);
-
     }
 
     @Test
