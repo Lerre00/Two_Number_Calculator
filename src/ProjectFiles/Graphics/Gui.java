@@ -107,39 +107,54 @@ public class Gui extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().equals(button0)){
             resultWindow.setText(resultWindow.getText()+button0.getText());
+
         }else if(e.getSource().equals(button1)){
             resultWindow.setText(resultWindow.getText()+button1.getText());
+
         }else if(e.getSource().equals(button2)){
             resultWindow.setText(resultWindow.getText()+button2.getText());
+
         }else if(e.getSource().equals(button3)){
             resultWindow.setText(resultWindow.getText()+button3.getText());
+
         }else if(e.getSource().equals(button4)){
             resultWindow.setText(resultWindow.getText()+button4.getText());
+
         }else if(e.getSource().equals(button5)){
             resultWindow.setText(resultWindow.getText()+button5.getText());
+
         }else if(e.getSource().equals(button6)){
             resultWindow.setText(resultWindow.getText()+button6.getText());
+
         }else if(e.getSource().equals(button7)){
             resultWindow.setText(resultWindow.getText()+button7.getText());
+
         }else if(e.getSource().equals(button8)){
             resultWindow.setText(resultWindow.getText()+button8.getText());
+
         }else if(e.getSource().equals(button9)){
             resultWindow.setText(resultWindow.getText()+button9.getText());
+
         }else if(e.getSource().equals(commaButton)){
             if(!resultWindow.getText().endsWith(",")){
                 resultWindow.setText(resultWindow.getText()+commaButton.getText());
             }
+
         }else if(e.getSource().equals(clearButton)){
             resultWindow.setText("");
             state = OperatorStates.DEFAULT;
+
         }else if(e.getSource().equals(backspaceButton)){
             StringBuilder text = new StringBuilder(resultWindow.getText());
             if(text.isEmpty()){
+
             }
+
             else{
             text.deleteCharAt(text.length() -1);
             resultWindow.setText(text.toString());
             }
+
         }else if(e.getSource().equals(additionButton)){
             if (state.equals(OperatorStates.DEFAULT)){
                 state = OperatorStates.ADDITION;
@@ -179,6 +194,7 @@ public class Gui extends JFrame implements ActionListener {
                 b.setBackground(color);
             }
         }else if(e.getSource().equals(equalsButton)){
+
             String string = StringHandler.replaceCommasWithDots(resultWindow.getText());
             if(string.isEmpty()||state==OperatorStates.DEFAULT){}
             else{
@@ -186,32 +202,20 @@ public class Gui extends JFrame implements ActionListener {
             double1 = doubles.get(0);
             double2 = doubles.get(1);
             switch (state){
-                case DEFAULT -> {
-                    System.out.println("Ingen operator");
-                }
-                case ADDITION -> {
-                    answer = calculatorFacade.calculateAddition(double1,double2);
-                }
-                case SUBTRACTION -> {
-                    answer = calculatorFacade.calculateSubtraction(double1,double2);
-                }
-                case MULTIPLICATION -> {
-                    answer = calculatorFacade.calculateMultiplication(double1,double2);
-                }
-                case DIVISION -> {
-                    answer = calculatorFacade.calculateDivision(double1,double2);
-                }
-                case ROOT -> {
-                    answer = calculatorFacade.calculateRoot(double1,double2);
-                }
-                case EXPONENT -> {
-                    answer = calculatorFacade.calculateExponent(double1,double2);
-                }
+                case DEFAULT -> System.out.println("Ingen operator");
+                case ADDITION -> answer = calculatorFacade.calculateAddition(double1,double2);
+                case SUBTRACTION -> answer = calculatorFacade.calculateSubtraction(double1,double2);
+                case MULTIPLICATION -> answer = calculatorFacade.calculateMultiplication(double1,double2);
+                case DIVISION -> answer = calculatorFacade.calculateDivision(double1,double2);
+                case ROOT -> answer = calculatorFacade.calculateRoot(double1,double2);
+                case EXPONENT -> answer = calculatorFacade.calculateExponent(double1,double2);
             }
+
             answerAsString = String.valueOf(answer);
             resultWindow.setText(StringHandler.replaceDotsWithCommas(answerAsString));
             System.out.println(answerAsString);
             state = OperatorStates.DEFAULT;
+
         }
         }
     }
