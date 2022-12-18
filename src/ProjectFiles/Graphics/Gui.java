@@ -3,14 +3,12 @@ package ProjectFiles.Graphics;
 import ProjectFiles.Logic.CalculatorFacade;
 import ProjectFiles.Logic.ColorChanger;
 import ProjectFiles.Logic.Operators.OperatorStates;
-import ProjectFiles.Logic.Operators.Root;
-import ProjectFiles.Logic.StringSeparator;
+import ProjectFiles.Logic.StringHandler;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -23,6 +21,7 @@ public class Gui extends JFrame implements ActionListener {
     double double1;
     double double2;
     double answer;
+    String answerAsString;
 
     private JPanel basePanel = new JPanel();
     private JPanel northPanel = new JPanel();
@@ -96,13 +95,14 @@ public class Gui extends JFrame implements ActionListener {
         southPanel.add(commaButton);
         southPanel.add(equalsButton);
 
+        setTitle("Tvåtals Räknare");
+
         setSize(500,500);
         setLocation(100,100);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().equals(button0)){
@@ -126,77 +126,93 @@ public class Gui extends JFrame implements ActionListener {
         }else if(e.getSource().equals(button9)){
             resultWindow.setText(resultWindow.getText()+button9.getText());
         }else if(e.getSource().equals(commaButton)){
-            resultWindow.setText(resultWindow.getText()+commaButton.getText());
+            if(!resultWindow.getText().endsWith(",")){
+                resultWindow.setText(resultWindow.getText()+commaButton.getText());
+            }
         }else if(e.getSource().equals(clearButton)){
             resultWindow.setText("");
+            state = OperatorStates.DEFAULT;
         }else if(e.getSource().equals(backspaceButton)){
             StringBuilder text = new StringBuilder(resultWindow.getText());
             if(text.isEmpty()){
-
-            }else{
+            }
+            else{
             text.deleteCharAt(text.length() -1);
             resultWindow.setText(text.toString());
             }
         }else if(e.getSource().equals(additionButton)){
-            state = OperatorStates.ADDITION;
-            resultWindow.setText(resultWindow.getText()+additionButton.getText());
+            if (state.equals(OperatorStates.DEFAULT)){
+                state = OperatorStates.ADDITION;
+                resultWindow.setText(resultWindow.getText()+additionButton.getText());
+            }
         }else if(e.getSource().equals(subtractionButton)){
-            state = OperatorStates.SUBTRACTION;
-            resultWindow.setText(resultWindow.getText()+subtractionButton.getText());
+            if(state.equals(OperatorStates.DEFAULT)){
+                state = OperatorStates.SUBTRACTION;
+                resultWindow.setText(resultWindow.getText()+subtractionButton.getText());
+            }
         }else if(e.getSource().equals(divisionButton)){
-            state = OperatorStates.DIVISION;
-            resultWindow.setText(resultWindow.getText()+divisionButton.getText());
+            if(state.equals(OperatorStates.DEFAULT)) {
+                state = OperatorStates.DIVISION;
+                resultWindow.setText(resultWindow.getText() + divisionButton.getText());
+            }
         }else if(e.getSource().equals(multiplicationButton)){
-            state = OperatorStates.MULTIPLICATION;
-            resultWindow.setText(resultWindow.getText()+multiplicationButton.getText());
+            if(state.equals(OperatorStates.DEFAULT)) {
+                state = OperatorStates.MULTIPLICATION;
+                resultWindow.setText(resultWindow.getText() + multiplicationButton.getText());
+            }
         }else if(e.getSource().equals(squareRootButton)){
-            state = OperatorStates.ROOT;
-            resultWindow.setText(resultWindow.getText()+squareRootButton.getText());
+            if(state.equals(OperatorStates.DEFAULT)) {
+                state = OperatorStates.ROOT;
+                resultWindow.setText(resultWindow.getText() + squareRootButton.getText());
+            }
         }else if(e.getSource().equals(exponentButton)){
-            state = OperatorStates.EXPONENT;
-            resultWindow.setText(resultWindow.getText()+exponentButton.getText());
+            if(state.equals(OperatorStates.DEFAULT)) {
+                state = OperatorStates.EXPONENT;
+                resultWindow.setText(resultWindow.getText() + exponentButton.getText());
+            }
         }else if(e.getSource().equals(negativeNumberButton)){
             resultWindow.setText(resultWindow.getText()+negativeNumberButton.getText());
         }else if(e.getSource().equals(swapColorButton)){
             Color color = ColorChanger.getRandomColor();
+            northPanel.setBackground(ColorChanger.getRandomColor());
             for(JButton b: buttonArray){
                 b.setBackground(color);
             }
         }else if(e.getSource().equals(equalsButton)){
-            //Hämta all text
-            String string = resultWindow.getText();
-            //Dela text vid operatorn (kolla efter negativa tal)
-            doubles = StringSeparator.getDoubleListFromString(string);
-            //Get 2 doubles
+            String string = StringHandler.replaceCommasWithDots(resultWindow.getText());
+            if(string.isEmpty()||state==OperatorStates.DEFAULT){}
+            else{
+            doubles = StringHandler.getDoubleListFromString(string);
             double1 = doubles.get(0);
             double2 = doubles.get(1);
-            //To facade (double1, double2)
-            //From facade: answer
-            //ResultWindow.setText(answer)
             switch (state){
-                case DEFAULT -> System.out.println("Ingen operator");
+                case DEFAULT -> {
+                    System.out.println("Ingen operator");
+                }
                 case ADDITION -> {
                     answer = calculatorFacade.calculateAddition(double1,double2);
-                    //System.out.println("Plus");
-                    //resultWindow.setText(String.valueOf(answer));
                 }
                 case SUBTRACTION -> {
-                    calculatorFacade.calculateSubtraction(double1,double2);
-                    //System.out.println("Minus");
+                    answer = calculatorFacade.calculateSubtraction(double1,double2);
                 }
                 case MULTIPLICATION -> {
-                    calculatorFacade.calculateMultiplication(double1,double2);
-                    //System.out.println("Gånger");
+                    answer = calculatorFacade.calculateMultiplication(double1,double2);
                 }
                 case DIVISION -> {
-                    calculatorFacade.calculateDivision(double1,double2);
-                    //System.out.println("Delat");
+                    answer = calculatorFacade.calculateDivision(double1,double2);
                 }
-                case ROOT -> System.out.println("Root");
-                case EXPONENT -> System.out.println("Exponent");
+                case ROOT -> {
+                    answer = calculatorFacade.calculateRoot(double1,double2);
+                }
+                case EXPONENT -> {
+                    answer = calculatorFacade.calculateExponent(double1,double2);
+                }
             }
-            System.out.println(answer);
+            answerAsString = String.valueOf(answer);
+            resultWindow.setText(StringHandler.replaceDotsWithCommas(answerAsString));
+            System.out.println(answerAsString);
             state = OperatorStates.DEFAULT;
+        }
         }
     }
 }
