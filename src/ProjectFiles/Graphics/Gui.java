@@ -1,6 +1,7 @@
 package ProjectFiles.Graphics;
 
 import ProjectFiles.Logic.CalculatorFacade;
+import ProjectFiles.Logic.ColorChanger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,11 +46,12 @@ public class Gui extends JFrame implements ActionListener {
 
     public Gui(){
 
+        calculatorFacade = new CalculatorFacade();
+
         for(JButton button: buttonArray){
             button.addActionListener(this);
         }
 
-        calculatorFacade = new CalculatorFacade();
         basePanel.setLayout(new BorderLayout());
         add(basePanel);
         basePanel.add(northPanel, BorderLayout.NORTH);
@@ -94,7 +96,56 @@ public class Gui extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().equals(button0)){
-            resultWindow.setText(button0.getText());
+            resultWindow.setText(resultWindow.getText()+button0.getText());
+        }else if(e.getSource().equals(button1)){
+            resultWindow.setText(resultWindow.getText()+button1.getText());
+        }else if(e.getSource().equals(button2)){
+            resultWindow.setText(resultWindow.getText()+button2.getText());
+        }else if(e.getSource().equals(button3)){
+            resultWindow.setText(resultWindow.getText()+button3.getText());
+        }else if(e.getSource().equals(button4)){
+            resultWindow.setText(resultWindow.getText()+button4.getText());
+        }else if(e.getSource().equals(button5)){
+            resultWindow.setText(resultWindow.getText()+button5.getText());
+        }else if(e.getSource().equals(button6)){
+            resultWindow.setText(resultWindow.getText()+button6.getText());
+        }else if(e.getSource().equals(button7)){
+            resultWindow.setText(resultWindow.getText()+button7.getText());
+        }else if(e.getSource().equals(button8)){
+            resultWindow.setText(resultWindow.getText()+button8.getText());
+        }else if(e.getSource().equals(button9)){
+            resultWindow.setText(resultWindow.getText()+button9.getText());
+        }else if(e.getSource().equals(commaButton)){
+            resultWindow.setText(resultWindow.getText()+commaButton.getText());
+        }else if(e.getSource().equals(clearButton)){
+            resultWindow.setText("");
+        }else if(e.getSource().equals(backspaceButton)){
+            StringBuilder text = new StringBuilder(resultWindow.getText());
+            if(text.isEmpty()){
+
+            }else{
+            text.deleteCharAt(text.length() -1);
+            resultWindow.setText(text.toString());
+            }
+        }else if(e.getSource().equals(additionButton)){
+            resultWindow.setText(resultWindow.getText()+additionButton.getText());
+        }else if(e.getSource().equals(subtractionButton)){
+            resultWindow.setText(resultWindow.getText()+subtractionButton.getText());
+        }else if(e.getSource().equals(divisionButton)){
+            resultWindow.setText(resultWindow.getText()+divisionButton.getText());
+        }else if(e.getSource().equals(multiplicationButton)){
+            resultWindow.setText(resultWindow.getText()+multiplicationButton.getText());
+        }else if(e.getSource().equals(squareRootButton)){
+            resultWindow.setText(resultWindow.getText()+squareRootButton.getText());
+        }else if(e.getSource().equals(exponentButton)){
+            resultWindow.setText(resultWindow.getText()+exponentButton.getText());
+        }else if(e.getSource().equals(negativeNumberButton)){
+            resultWindow.setText(resultWindow.getText()+negativeNumberButton.getText());
+        }else if(e.getSource().equals(swapColorButton)){
+            Color color = ColorChanger.getRandomColor();
+            for(JButton b: buttonArray){
+                b.setBackground(color);
+            }
         }
     }
 }
