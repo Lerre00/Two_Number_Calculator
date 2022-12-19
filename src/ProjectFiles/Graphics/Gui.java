@@ -14,14 +14,14 @@ import java.util.Arrays;
 
 public class Gui extends JFrame implements ActionListener {
 
-    CalculatorFacade calculatorFacade;
-    OperatorStates state = OperatorStates.DEFAULT;
+    private CalculatorFacade calculatorFacade;
+    private OperatorStates state = OperatorStates.DEFAULT;
 
-    ArrayList<Double> doubles;
-    double double1;
-    double double2;
-    double answer;
-    String answerAsString;
+    private ArrayList<Double> doubles;
+    private double double1;
+    private double double2;
+    private double answer;
+    private String answerAsString;
 
     private JPanel basePanel = new JPanel();
     private JPanel northPanel = new JPanel();
