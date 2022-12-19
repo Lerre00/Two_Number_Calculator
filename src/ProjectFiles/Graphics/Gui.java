@@ -105,6 +105,7 @@ public class Gui extends JFrame implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        try{
         if(e.getSource().equals(button0)){
             resultWindow.setText(resultWindow.getText()+button0.getText());
 
@@ -179,6 +180,7 @@ public class Gui extends JFrame implements ActionListener {
             if(state.equals(OperatorStates.DEFAULT)) {
                 state = OperatorStates.ROOT;
                 resultWindow.setText(resultWindow.getText() + squareRootButton.getText());
+
             }
         }else if(e.getSource().equals(exponentButton)){
             if(state.equals(OperatorStates.DEFAULT)) {
@@ -217,6 +219,11 @@ public class Gui extends JFrame implements ActionListener {
             state = OperatorStates.DEFAULT;
 
         }
+        }
+        }catch (NumberFormatException n){
+            JOptionPane.showMessageDialog(null, resultWindow.getText() +
+                    " går inte att räkna ut.");
+            n.printStackTrace();
         }
     }
 }
