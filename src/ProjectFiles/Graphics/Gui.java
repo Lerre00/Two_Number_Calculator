@@ -20,6 +20,10 @@ public class Gui extends JFrame implements ActionListener {
     ArrayList<Double> doubles;
     double double1;
     double double2;
+    int counter = 0;
+    int sNum = 0;
+    String tal1;
+    String tal2;
     double answer;
     String answerAsString;
 
@@ -135,6 +139,33 @@ public class Gui extends JFrame implements ActionListener {
         }else if(e.getSource().equals(button9)){
             resultWindow.setText(resultWindow.getText()+button9.getText());
 
+        }else if(e.getSource().equals(negativeNumberButton)){
+
+            if(negativeNumberButton.getText() == "(-)") {
+                button1.setText("-1");
+                button2.setText("-2");
+                button3.setText("-3");
+                button4.setText("-4");
+                button5.setText("-5");
+                button6.setText("-6");
+                button7.setText("-7");
+                button8.setText("-8");
+                button9.setText("-9");
+                negativeNumberButton.setText("(+)");
+            }
+            else if(negativeNumberButton.getText() == "(+)"){
+                button1.setText("1");
+                button2.setText("2");
+                button3.setText("3");
+                button4.setText("4");
+                button5.setText("5");
+                button6.setText("6");
+                button7.setText("7");
+                button8.setText("8");
+                button9.setText("9");
+                negativeNumberButton.setText("(-)");
+            }
+
         }else if(e.getSource().equals(commaButton)){
             if(!resultWindow.getText().endsWith(",")){
                 resultWindow.setText(resultWindow.getText()+commaButton.getText());
@@ -159,31 +190,37 @@ public class Gui extends JFrame implements ActionListener {
             if (state.equals(OperatorStates.DEFAULT)){
                 state = OperatorStates.ADDITION;
                 resultWindow.setText(resultWindow.getText()+additionButton.getText());
+                tal1 = resultWindow.getText().replace("+", "");
             }
         }else if(e.getSource().equals(subtractionButton)){
             if(state.equals(OperatorStates.DEFAULT)){
                 state = OperatorStates.SUBTRACTION;
                 resultWindow.setText(resultWindow.getText()+subtractionButton.getText());
+                tal1 = resultWindow.getText().substring(0, resultWindow.getText().length() - 1);
             }
         }else if(e.getSource().equals(divisionButton)){
             if(state.equals(OperatorStates.DEFAULT)) {
                 state = OperatorStates.DIVISION;
                 resultWindow.setText(resultWindow.getText() + divisionButton.getText());
+                tal1 = resultWindow.getText().replace("/", "");
             }
         }else if(e.getSource().equals(multiplicationButton)){
             if(state.equals(OperatorStates.DEFAULT)) {
                 state = OperatorStates.MULTIPLICATION;
                 resultWindow.setText(resultWindow.getText() + multiplicationButton.getText());
+                tal1 = resultWindow.getText().replace("*", "");
             }
         }else if(e.getSource().equals(squareRootButton)){
             if(state.equals(OperatorStates.DEFAULT)) {
                 state = OperatorStates.ROOT;
                 resultWindow.setText(resultWindow.getText() + squareRootButton.getText());
+                tal1 = resultWindow.getText().substring(0, resultWindow.getText().length() - 1);
             }
         }else if(e.getSource().equals(exponentButton)){
             if(state.equals(OperatorStates.DEFAULT)) {
                 state = OperatorStates.EXPONENT;
                 resultWindow.setText(resultWindow.getText() + exponentButton.getText());
+                tal1 = resultWindow.getText().substring(0, resultWindow.getText().length() - 1);
             }
         }else if(e.getSource().equals(negativeNumberButton)){
             resultWindow.setText(resultWindow.getText()+negativeNumberButton.getText());
@@ -195,12 +232,57 @@ public class Gui extends JFrame implements ActionListener {
             }
         }else if(e.getSource().equals(equalsButton)){
 
+            if(state == OperatorStates.ADDITION){
+                    tal2 = resultWindow.getText().substring(resultWindow.getText().indexOf(additionButton.getText()) + 1);
+            }
+            else if(state == OperatorStates.MULTIPLICATION){
+                tal2 = resultWindow.getText().substring(resultWindow.getText().indexOf(multiplicationButton.getText()) + 1);
+            }
+            else if(state == OperatorStates.DIVISION){
+                tal2 = resultWindow.getText().substring(resultWindow.getText().indexOf(divisionButton.getText()) + 1);
+            }
+            else if(state == OperatorStates.EXPONENT){
+                tal2 = resultWindow.getText().substring(resultWindow.getText().indexOf(exponentButton.getText()) + 1);
+            }
+            else if(state == OperatorStates.ROOT){
+                tal2 = resultWindow.getText().substring(resultWindow.getText().indexOf(squareRootButton.getText()) + 1);
+            }
+            else if(state == OperatorStates.SUBTRACTION){
+
+                for (int i = 0; i < resultWindow.getText().length(); i++) {
+                    if(resultWindow.getText().charAt(i) == '-'){
+                        sNum = i;
+                        counter++;
+                    }
+                }
+                if(counter == 3){
+                    tal2 = resultWindow.getText().substring(sNum+1);
+                }
+                else if (counter == 2) {
+                    if(resultWindow.getText().charAt(0) == '-'){
+                        tal2 = resultWindow.getText().substring(sNum+1);
+                    }
+                    else{
+                        tal2 = resultWindow.getText().substring(sNum);
+                    }
+                }
+                else if (counter == 1) {
+                    tal2 = resultWindow.getText().substring(resultWindow.getText().indexOf(subtractionButton.getText()) + 1);
+                }
+
+            }
+
             String string = StringHandler.replaceCommasWithDots(resultWindow.getText());
+
+
+
             if(string.isEmpty()||state==OperatorStates.DEFAULT){}
             else{
             doubles = StringHandler.getDoubleListFromString(string);
-            double1 = doubles.get(0);
-            double2 = doubles.get(1);
+            double1 = Double.parseDouble(tal1);
+            double2 = Double.parseDouble(tal2);
+            //double1 = doubles.get(0);
+            //double2 = doubles.get(1);
             switch (state){
                 case DEFAULT -> System.out.println("Ingen operator");
                 case ADDITION -> answer = calculatorFacade.calculateAddition(double1,double2);

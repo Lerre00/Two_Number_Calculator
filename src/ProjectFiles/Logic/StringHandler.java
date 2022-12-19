@@ -15,7 +15,7 @@ public class StringHandler {
             doubleList.add(d1);
             doubleList.add(d2);
 
-        } else if (string.contains("-")) {
+        } else if (string.contains("-") && !string.startsWith("-")) {
             d1 = Double.parseDouble(string.substring(0, string.indexOf("-")));
             d2 = Double.parseDouble(string.substring(string.indexOf("-") + 1));
             doubleList.add(d1);
