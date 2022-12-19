@@ -17,15 +17,15 @@ public class Gui extends JFrame implements ActionListener {
     private CalculatorFacade calculatorFacade;
     private OperatorStates state = OperatorStates.DEFAULT;
 
-    ArrayList<Double> doubles;
-    double double1;
-    double double2;
-    int counter = 0;
-    int sNum = 0;
-    String tal1;
-    String tal2;
-    double answer;
-    String answerAsString;
+    private ArrayList<Double> doubles;
+    private double double1;
+    private double double2;
+    private int counter = 0;
+    private int sNum = 0;
+    private String tal1;
+    private String tal2;
+    private double answer;
+    private String answerAsString;
 
     private JPanel basePanel = new JPanel();
     private JPanel northPanel = new JPanel();
@@ -40,7 +40,7 @@ public class Gui extends JFrame implements ActionListener {
     private JButton button7 = new JButton("7");
     private JButton button8 = new JButton("8");
     private JButton button9 = new JButton("9");
-    private JButton commaButton = new JButton(",");
+    private JButton commaButton = new JButton(".");
     private JButton additionButton = new JButton("+");
     private JButton subtractionButton = new JButton("-");
     private JButton multiplicationButton = new JButton("*");
@@ -101,6 +101,7 @@ public class Gui extends JFrame implements ActionListener {
 
         setTitle("Tvåtals Räknare");
 
+        resultWindow.setEditable(false);
         setSize(500,500);
         setLocation(100,100);
         setVisible(true);
@@ -246,7 +247,7 @@ public class Gui extends JFrame implements ActionListener {
                 tal2 = resultWindow.getText().substring(resultWindow.getText().indexOf(exponentButton.getText()) + 1);
             }
             else if(state == OperatorStates.ROOT){
-                tal2 = resultWindow.getText().substring(resultWindow.getText().indexOf(squareRootButton.getText()) + 1);
+                tal2 = "1";
             }
             else if(state == OperatorStates.SUBTRACTION){
 
@@ -292,10 +293,14 @@ public class Gui extends JFrame implements ActionListener {
             }
 
             answerAsString = String.valueOf(answer);
+            if(answerAsString == "NaN"){
+                JOptionPane.showMessageDialog(null, "Kalkylatorn hanterar inte komplexa tal");
+                answerAsString="ERROR";
+            }
             resultWindow.setText(StringHandler.replaceDotsWithCommas(answerAsString));
             System.out.println(answerAsString);
             state = OperatorStates.DEFAULT;
-
+                resultWindow.setText(StringHandler.replaceCommasWithDots(answerAsString));
         }
         }
         }catch (NumberFormatException n){
