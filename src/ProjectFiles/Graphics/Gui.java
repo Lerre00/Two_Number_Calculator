@@ -21,7 +21,7 @@ public class Gui extends JFrame implements ActionListener {
     private double double1;
     private double double2;
     private int counter = 0;
-    private int sNum = 0;
+    private int substringNumber = 0;
     private String tal1;
     private String tal2;
     private double answer;
@@ -253,19 +253,19 @@ public class Gui extends JFrame implements ActionListener {
 
                 for (int i = 0; i < resultWindow.getText().length(); i++) {
                     if(resultWindow.getText().charAt(i) == '-'){
-                        sNum = i;
+                        substringNumber = i;
                         counter++;
                     }
                 }
                 if(counter == 3){
-                    tal2 = resultWindow.getText().substring(sNum+1);
+                    tal2 = resultWindow.getText().substring(substringNumber +1);
                 }
                 else if (counter == 2) {
                     if(resultWindow.getText().charAt(0) == '-'){
-                        tal2 = resultWindow.getText().substring(sNum+1);
+                        tal2 = resultWindow.getText().substring(substringNumber +1);
                     }
                     else{
-                        tal2 = resultWindow.getText().substring(sNum);
+                        tal2 = resultWindow.getText().substring(substringNumber);
                     }
                 }
                 else if (counter == 1) {
@@ -280,8 +280,7 @@ public class Gui extends JFrame implements ActionListener {
             doubles = StringHandler.getDoubleListFromString(string);
             double1 = Double.parseDouble(tal1);
             double2 = Double.parseDouble(tal2);
-            //double1 = doubles.get(0);
-            //double2 = doubles.get(1);
+
             switch (state){
                 case DEFAULT -> System.out.println("Ingen operator");
                 case ADDITION -> answer = calculatorFacade.calculateAddition(double1,double2);
